@@ -1,5 +1,6 @@
 ﻿public class Sorter
 {
+    // BubbleSort
     public static List<int> BubbleSort(List<int> numbers)
     {
         for (int i = 0; i < numbers.Count - 1; i++)
@@ -17,6 +18,7 @@
         return numbers;
     }
 
+    // InsertionSort
     public static List<int> InsertionSort(List<int> numbers)
     {
         for (int i = 1; i < numbers.Count; i++)
@@ -33,6 +35,7 @@
         return numbers;
     }
 
+    // SelectionSort
     public static List<int> SelectionSort(List<int> numbers)
     {
         for (int i = 0; i < numbers.Count - 1; i++)
@@ -52,29 +55,7 @@
         return numbers;
     }
 
-    public static List<int> ZickzackSort(List<int> numbers)
-    {
-        // Liste sortieren
-        numbers.Sort();
-
-        // Sortierte Liste erstellen
-        List<int> sortedNumbers = new List<int>();
-
-        // Schleife über die Liste
-        while (numbers.Count > 0)
-        {
-            // Erstes und letztes Element hinzufügen
-            sortedNumbers.Add(numbers[0]);
-            sortedNumbers.Add(numbers[numbers.Count - 1]);
-
-            // Erstes und letztes Element entfernen
-            numbers.RemoveAt(0);
-            numbers.RemoveAt(numbers.Count - 1);
-        }
-
-        return sortedNumbers;
-    }
-
+    // QuickSort
     public static List<int> QuickSort(List<int> numbers)
     {
         if (numbers.Count <= 1)
@@ -97,7 +78,7 @@
         return left;
     }
 
-
+    // MergeSort
     public static List<int> MergeSort(List<int> numbers)
     {
         if (numbers.Count <= 1)
@@ -105,41 +86,79 @@
             return numbers;
         }
 
-        // Liste in zwei Hälften teilen
+        // Split the list into two equal parts
         int middle = numbers.Count / 2;
-        List<int> left = numbers.Take(middle).ToList();
-        List<int> right = numbers.Skip(middle).ToList();
+        List<int> left = numbers.GetRange(0, middle);
+        List<int> right = numbers.GetRange(middle, numbers.Count - middle);
 
-        // Rekursiv sortieren
+        // Recursively sort both halves
         left = MergeSort(left);
         right = MergeSort(right);
 
-        // Hälften zusammenführen und sortieren
+        // Merge the sorted halves
         return Merge(left, right);
     }
 
-    public static List<int> Merge(List<int> left, List<int> right)
+    private static List<int> Merge(List<int> left, List<int> right)
     {
         List<int> result = new List<int>();
+
+        // Merge the lists until one of them is empty
         while (left.Count > 0 || right.Count > 0)
         {
             if (left.Count > 0 && right.Count > 0)
             {
-                // Beide Listen haben Elemente, vergleiche die kleinsten Elemente
-                if (left.First() <= right.First())
+                // Add the smaller element to the result
+                if (left[0] <= right[0])
                 {
-                    result.Add(left.First());
+                    result.Add(left[0]);
                     left.RemoveAt(0);
                 }
                 else
                 {
-                    // Nur eine Liste hat noch Elemente, füge alle Elemente hinzu
-                    result.AddRange(left);
-                    result.AddRange(right);
-                    break;
+                    result.Add(right[0]);
+                    right.RemoveAt(0);
                 }
             }
-            return result;
+            else if (left.Count > 0)
+            {
+                // Only the left list has elements, add them all
+                result.AddRange(left);
+                break;
+            }
+            else
+            {
+                // Only the right list has elements, add them all
+                result.AddRange(right);
+                break;
+            }
         }
+
+        return result;
+    }
+
+
+    // ZickZack output
+    public static List<int> ZickzackSort(List<int> numbers)
+    {
+        // Liste sortieren
+        numbers.Sort();
+
+        // Sortierte Liste erstellen
+        List<int> sortedNumbers = new List<int>();
+
+        // Schleife über die Liste
+        while (numbers.Count > 0)
+        {
+            // Erstes und letztes Element hinzufügen
+            sortedNumbers.Add(numbers[0]);
+            sortedNumbers.Add(numbers[numbers.Count - 1]);
+
+            // Erstes und letztes Element entfernen
+            numbers.RemoveAt(0);
+            numbers.RemoveAt(numbers.Count - 1);
+        }
+
+        return sortedNumbers;
     }
 }
