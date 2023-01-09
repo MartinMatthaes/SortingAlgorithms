@@ -74,4 +74,72 @@
 
         return sortedNumbers;
     }
+
+    public static List<int> QuickSort(List<int> numbers)
+    {
+        if (numbers.Count <= 1)
+        {
+            return numbers;
+        }
+
+        // Pivot Element auswählen und Liste in Elemente größer als das Pivot und Elemente kleiner als das Pivot teilen
+        int pivot = numbers[numbers.Count / 2];
+        List<int> left = numbers.Where(num => num < pivot).ToList();
+        List<int> right = numbers.Where(num => num > pivot).ToList();
+
+        // Rekursiv sortieren
+        left = QuickSort(left);
+        right = QuickSort(right);
+
+        // Sortierte Listen zusammenführen
+        left.Add(pivot);
+        left.AddRange(right);
+        return left;
+    }
+
+
+    public static List<int> MergeSort(List<int> numbers)
+    {
+        if (numbers.Count <= 1)
+        {
+            return numbers;
+        }
+
+        // Liste in zwei Hälften teilen
+        int middle = numbers.Count / 2;
+        List<int> left = numbers.Take(middle).ToList();
+        List<int> right = numbers.Skip(middle).ToList();
+
+        // Rekursiv sortieren
+        left = MergeSort(left);
+        right = MergeSort(right);
+
+        // Hälften zusammenführen und sortieren
+        return Merge(left, right);
+    }
+
+    public static List<int> Merge(List<int> left, List<int> right)
+    {
+        List<int> result = new List<int>();
+        while (left.Count > 0 || right.Count > 0)
+        {
+            if (left.Count > 0 && right.Count > 0)
+            {
+                // Beide Listen haben Elemente, vergleiche die kleinsten Elemente
+                if (left.First() <= right.First())
+                {
+                    result.Add(left.First());
+                    left.RemoveAt(0);
+                }
+                else
+                {
+                    // Nur eine Liste hat noch Elemente, füge alle Elemente hinzu
+                    result.AddRange(left);
+                    result.AddRange(right);
+                    break;
+                }
+            }
+            return result;
+        }
+    }
 }
