@@ -151,7 +151,6 @@ namespace SortingAlgorithms
                     }
                 }
 
-
                 while (true)
                 {
                     // Choose sorting method to be displayed
