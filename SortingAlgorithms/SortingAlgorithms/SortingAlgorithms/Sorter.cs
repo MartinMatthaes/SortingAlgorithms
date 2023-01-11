@@ -148,18 +148,21 @@
         // Loop through numbers as long as there are any in the list
         while (numbers.Count > 0)
         {
-            sortedNumbers.Add(numbers[0]);
-            sortedNumbers.Add(numbers[numbers.Count - 1]);
-            try
+            // If only one number left
+            if (numbers.Count == 1)
             {
+                sortedNumbers.Add(numbers[0]);
+                numbers.RemoveAt(0);
+            } 
+            // Else add both numbers
+            else
+            {
+                sortedNumbers.Add(numbers[numbers.Count - 1]);
+                sortedNumbers.Add(numbers[0]);
                 // Remove last element
                 numbers.RemoveAt(numbers.Count - 1);
                 // Remove first element
-                numbers.RemoveAt(0);    
-            }
-            catch (Exception)
-            {
-                throw;
+                numbers.RemoveAt(0);
             }
         }
         // Return new list
