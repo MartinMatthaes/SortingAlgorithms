@@ -6,6 +6,7 @@
         // Loop through numbers
         for (int i = 0; i < numbers.Count - 1; i++)
         {
+            // Loop through unsorted portion of numbers
             for (int j = 0; j < numbers.Count - i - 1; j++)
             {
                 if (numbers[j] > numbers[j + 1])
@@ -23,11 +24,12 @@
     // InsertionSort
     public static List<int> InsertionSort(List<int> numbers)
     {
-        // Loop through numbers
+        // Loop through unsorted numbers
         for (int i = 1; i < numbers.Count; i++)
         {
             int key = numbers[i];
             int j = i - 1;
+            // Loop through sorted numbers and compare them
             while (j >= 0 && numbers[j] > key)
             {
                 numbers[j + 1] = numbers[j];
@@ -46,6 +48,7 @@
         for (int i = 0; i < numbers.Count - 1; i++)
         {
             int minIndex = i;
+            // Loop through sublist of numbers and finds the minimum value
             for (int j = i + 1; j < numbers.Count; j++)
             {
                 if (numbers[j] < numbers[minIndex])
@@ -53,6 +56,7 @@
                     minIndex = j;
                 }
             }
+            // Minimum value is swapped with the value at the current outer loop
             int temp = numbers[minIndex];
             numbers[minIndex] = numbers[i];
             numbers[i] = temp;
@@ -64,16 +68,20 @@
     // QuickSort
     public static List<int> QuickSort(List<int> numbers)
     {
-        // QuickSort be gay to understand
+        // If numbers is 1 or less return
         if (numbers.Count <= 1)
         {
             return numbers;
         }
 
+        // Pivot is in the middle of the numbers
         int pivot = numbers[numbers.Count / 2];
+        // https://learn.microsoft.com/de-de/dotnet/api/system.linq.enumerable.where?view=net-7.0
+        // Make 2 new lists. 1. Smaller numbers than the pivot; 2. Greater numbers than the pivot
         List<int> left = numbers.Where(num => num < pivot).ToList();
         List<int> right = numbers.Where(num => num > pivot).ToList();
 
+        // Repeat 
         left = QuickSort(left);
         right = QuickSort(right);
 
@@ -85,7 +93,7 @@
     // MergeSort
     public static List<int> MergeSort(List<int> numbers)
     {
-        // MergeSort be gay to understand
+        // If numbers is 1 or less return
         if (numbers.Count <= 1)
         {
             return numbers;
@@ -96,9 +104,10 @@
         List<int> left = numbers.GetRange(0, middle);
         List<int> right = numbers.GetRange(middle, numbers.Count - middle);
 
+        // Repeat
         left = MergeSort(left);
         right = MergeSort(right);
-        // Return new list
+        // After sort return new list using Merge() function
         return Merge(left, right);
     }
 

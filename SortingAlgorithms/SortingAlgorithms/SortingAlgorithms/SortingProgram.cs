@@ -12,17 +12,17 @@ namespace SortingAlgorithms
     {
         public void DoSorting()
         {
+            // Used for user input
             int lastStep = 0;
             do
             {
-                // Numbers list
+                // Create new numbers list
                 List<int> numbers;
                 int numCount = 0;
 
                 // Keep asking for input
                 while (true)
                 {
-                    //Console.Clear();
                     // Random or userinput for the numbers
                     Console.WriteLine("Do you want to generate random numbers or enter them manually?");
                     Console.WriteLine("1. Generate randomly");
@@ -37,7 +37,6 @@ namespace SortingAlgorithms
                     {
                         while (true)
                         {
-                            //Console.Clear();
                             Console.WriteLine("How many numbers do you want to generate?");
                             Console.Write("Input: ");
                             bool validInput = int.TryParse(Console.ReadLine(), out numCount);
@@ -46,7 +45,7 @@ namespace SortingAlgorithms
                             Console.WriteLine("Invalid input. Re-enter the input.");
                         }
 
-                        // Zufällige Zahlen generieren
+                        // Randomly generated
                         Random rnd = new();
                         numbers = new List<int>();
                         for (int i = 0; i < numCount; i++)
@@ -60,7 +59,6 @@ namespace SortingAlgorithms
                     {
                         while (true)
                         {
-                            //Console.Clear();
                             Console.WriteLine("Enter your desired numbers seperated by spaces: ");
                             string inputNumbers = Console.ReadLine();
                             if (string.IsNullOrWhiteSpace(inputNumbers))
@@ -70,6 +68,7 @@ namespace SortingAlgorithms
                             else
                             {
                                 numbers = new List<int>();
+                                // Try and convert all numbers divided by spaces into int
                                 foreach (string str in inputNumbers.Split(' '))
                                 {
                                     if (int.TryParse(str, out int num))
@@ -92,7 +91,6 @@ namespace SortingAlgorithms
                     else
                     {
                         Console.WriteLine("Invalid input. Re-enter the input.");
-                        //numbers = new List<int>();
                     }
                 }
 
@@ -102,7 +100,6 @@ namespace SortingAlgorithms
                 Console.WriteLine("Numbers to sort: ");
                 numbers.ForEach(x => Console.Write(x + " "));
 
-                // Do the sorting
                 List<int> sortedNumbers;
 
                 while (true)
